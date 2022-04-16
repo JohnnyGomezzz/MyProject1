@@ -12,4 +12,12 @@ public class GfxUtils {
         y = Gdx.graphics.getHeight() - Gdx.input.getY();
         return new Vector2(x, y);
     }
+
+    public static Vector2 getPosition(int width, int height) {
+        x = Gdx.input.getX();
+        y = Gdx.graphics.getHeight() - Gdx.input.getY();
+        x -= width / 2f;
+        y -= height / 2f;
+        return new Vector2(x, y);
+    }
 }
