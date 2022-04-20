@@ -19,9 +19,9 @@ import java.util.List;
 public class MyGdxGame extends ApplicationAdapter {
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
-    NewAnimation turretAnimation;
-    NewAnimation bodyAnimation;
-    NewAnimation headAnimation;
+    NewAnimation bunkerAnimation;
+    NewAnimation bunkerBaseAnimation;
+    NewAnimation cannonAnimation;
     List<Explosion> explosions;
 
     @Override
@@ -29,18 +29,18 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         explosions = new ArrayList<>();
-        turretAnimation = new NewAnimation("turret-sprites-deployment.png", Animation.PlayMode.NORMAL,
-                8, 1, 5);
-        bodyAnimation = new NewAnimation("turret-sprites-body.png", Animation.PlayMode.LOOP,
+        bunkerAnimation = new NewAnimation("bunker-cannon.png", Animation.PlayMode.NORMAL,
+                4, 4, 5);
+        bunkerBaseAnimation = new NewAnimation("Bunker_base.png", Animation.PlayMode.LOOP,
                 2, 1, 5);
-        headAnimation = new NewAnimation("turret-sprites-head-shot-idle.png", Animation.PlayMode.NORMAL,
-                5, 1, 25);
+        cannonAnimation = new NewAnimation("cannon.png", Animation.PlayMode.NORMAL,
+                1, 1, 25);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(Color.DARK_GRAY);
-        float rotation = 360 - MathUtils.atan2(getPosition().x - 25, getPosition().y - 34) * MathUtils.radiansToDegrees;
+        float rotation = 360 - MathUtils.atan2(getPosition().x - 320, getPosition().y - 22) * MathUtils.radiansToDegrees;
         boolean fire = false;
 
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) fire = true;
@@ -52,15 +52,17 @@ public class MyGdxGame extends ApplicationAdapter {
         shapeRenderer.end();
 
         batch.begin();
-        if (!turretAnimation.isFinished()) {
-            turretAnimation.setTime(Gdx.graphics.getDeltaTime());
-            batch.draw(turretAnimation.getRegion(), 0, 0);
+        if (!bunkerAnimation.isFinished()) {
+            bunkerAnimation.setTime(Gdx.graphics.getDeltaTime());
+            batch.draw(bunkerAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth()), 0,
+                    bunkerAnimation.getRegion().getRegionWidth() * 2, bunkerAnimation.getRegion().getRegionHeight() * 2);
         } else {
-            bodyAnimation.setTime(Gdx.graphics.getDeltaTime());
-            batch.draw(bodyAnimation.getRegion(), 0, 0);
-            batch.draw(headAnimation.getRegion(), 11, 12, 14, 22,
-                    headAnimation.getRegion().getRegionWidth(), headAnimation.getRegion().getRegionHeight(),
-                    1, 1, rotation, false);
+            bunkerBaseAnimation.setTime(Gdx.graphics.getDeltaTime());
+            batch.draw(cannonAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth() / 2f + 13),
+                    0, 46, 11, cannonAnimation.getRegion().getRegionHeight(), cannonAnimation.getRegion().getRegionWidth(),
+                    2, 2, rotation - 90, false);
+            batch.draw(bunkerBaseAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth()), 0,
+                    bunkerAnimation.getRegion().getRegionWidth() * 2, bunkerAnimation.getRegion().getRegionHeight() * 2);
         }
         for (int i = 0; i < explosions.size(); i++) {
             explosions.get(i).setTime(Gdx.graphics.getDeltaTime());
@@ -72,11 +74,11 @@ public class MyGdxGame extends ApplicationAdapter {
         }
         batch.end();
 
-        if ((fire & !headAnimation.isFinished()) || (!fire & headAnimation.isFinished())) {
-            headAnimation.setTime(Gdx.graphics.getDeltaTime());
+        if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
+            cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
         }
-        if (fire & headAnimation.isFinished()) {
-            headAnimation.resetTime();
+        if (fire & cannonAnimation.isFinished()) {
+            cannonAnimation.resetTime();
             explosions.add(new Explosion("79a0eceb71bb6a9939df582317038b81.png",
                     Animation.PlayMode.NORMAL, 4, 4,16, "370b925a30aca01.mp3"));
         }
