@@ -29,10 +29,10 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         explosions = new ArrayList<>();
-        bunkerAnimation = new NewAnimation("bunker-cannon.png", Animation.PlayMode.NORMAL,
+        bunkerAnimation = new NewAnimation("Bunker.png", Animation.PlayMode.NORMAL,
                 4, 4, 5);
         bunkerBaseAnimation = new NewAnimation("Bunker_base.png", Animation.PlayMode.LOOP,
-                2, 1, 5);
+                2, 1, 4);
         cannonAnimation = new NewAnimation("cannon.png", Animation.PlayMode.NORMAL,
                 1, 1, 25);
     }
