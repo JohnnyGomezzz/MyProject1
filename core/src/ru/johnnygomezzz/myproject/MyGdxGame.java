@@ -25,6 +25,8 @@ public class MyGdxGame extends ApplicationAdapter {
     NewAnimation cannonAnimation;
     List<Explosion> explosions;
     Sprite cannonSprite;
+    Sprite bunkerSprite;
+    Sprite bunkerBaseSprite;
     TextureAtlas mainAtlas;
 
     @Override
@@ -43,7 +45,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void render() {
-        ScreenUtils.clear(Color.DARK_GRAY);
+        ScreenUtils.clear(Color.LIGHT_GRAY);
         boolean fire = false;
 
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) fire = true;
@@ -54,16 +56,37 @@ public class MyGdxGame extends ApplicationAdapter {
             shapeRenderer.circle(getPosition().x, getPosition().y, 7);
         shapeRenderer.end();
 
+        bunkerSprite = new Sprite(bunkerAnimation.getRegion());
+        Vector2 bunkerPosition = new Vector2(33, bunkerSprite.getRegionHeight() - 44);
+        batch.begin();
+        bunkerSprite.setPosition(Gdx.graphics.getWidth() / 2f - bunkerPosition.x, 22);
+        bunkerSprite.setScale(2, 2);
+        batch.end();
+
+        bunkerBaseSprite = new Sprite(bunkerBaseAnimation.getRegion());
+        Vector2 bunkerBasePosition = new Vector2(33, bunkerBaseSprite.getRegionHeight() - 44);
+        batch.begin();
+        bunkerBaseSprite.setPosition(Gdx.graphics.getWidth() / 2f - bunkerBasePosition.x, 22);
+        bunkerBaseSprite.setScale(2, 2);
+        batch.end();
+
+        cannonSprite = new Sprite(cannonAnimation.getRegion());
+        Vector2 cannonPosition = new Vector2(11, cannonSprite.getRegionHeight() - 44);
+        cannonSprite.setOrigin(cannonPosition.x, cannonPosition.y);
+        batch.begin();
+        cannonSprite.setPosition(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15);
+        cannonSprite.setRotation(getAngle(new Vector2(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15)));
+        cannonSprite.setScale(2, 2);
+        batch.end();
+
         batch.begin();
         if (!bunkerAnimation.isFinished()) {
             bunkerAnimation.setTime(Gdx.graphics.getDeltaTime());
-            batch.draw(bunkerAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth()), 0,
-                    bunkerAnimation.getRegion().getRegionWidth() * 2, bunkerAnimation.getRegion().getRegionHeight() * 2);
+            bunkerSprite.draw(batch);
         } else {
             bunkerBaseAnimation.setTime(Gdx.graphics.getDeltaTime());
             cannonSprite.draw(batch);
-            batch.draw(bunkerBaseAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth()), 0,
-                    bunkerAnimation.getRegion().getRegionWidth() * 2, bunkerAnimation.getRegion().getRegionHeight() * 2);
+            bunkerBaseSprite.draw(batch);
         }
         for (int i = 0; i < explosions.size(); i++) {
             explosions.get(i).setTime(Gdx.graphics.getDeltaTime());
@@ -83,22 +106,11 @@ public class MyGdxGame extends ApplicationAdapter {
             explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
                     Animation.PlayMode.NORMAL, 5, 4,16, "laser-explosion.mp3"));
         }
-
-        cannonSprite = new Sprite(cannonAnimation.getRegion());
-        Vector2 cannonPosition = new Vector2(11, cannonSprite.getRegionHeight() - 44    );
-        cannonSprite.setOrigin(cannonPosition.x, cannonPosition.y);
-
-        batch.begin();
-        cannonSprite.setPosition(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15);
-        cannonSprite.setRotation(getAngle(new Vector2(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15)));
-        cannonSprite.setScale(2, 2);
-//        cannonSprite.draw(batch);
-        batch.end();
-
     }
 
     @Override
     public void dispose() {
         batch.dispose();
+        shapeRenderer.dispose();
     }
 }
