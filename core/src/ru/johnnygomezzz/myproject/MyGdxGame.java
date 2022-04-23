@@ -79,8 +79,8 @@ public class MyGdxGame extends ApplicationAdapter {
         }
         if (fire & cannonAnimation.isFinished()) {
             cannonAnimation.resetTime();
-            explosions.add(new Explosion("79a0eceb71bb6a9939df582317038b81.png",
-                    Animation.PlayMode.NORMAL, 4, 4,16, "370b925a30aca01.mp3"));
+            explosions.add(new Explosion("explosion-green.png",
+                    Animation.PlayMode.NORMAL, 5, 4,16, "laser-explosion.mp3"));
         }
     }
 
