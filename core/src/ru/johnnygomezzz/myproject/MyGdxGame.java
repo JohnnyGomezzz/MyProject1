@@ -3,6 +3,7 @@ package ru.johnnygomezzz.myproject;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -28,6 +29,7 @@ public class MyGdxGame extends ApplicationAdapter {
     Sprite bunkerSprite;
     Sprite bunkerBaseSprite;
     TextureAtlas mainAtlas;
+    Music deploySound;
 
     @Override
     public void create() {
@@ -39,16 +41,15 @@ public class MyGdxGame extends ApplicationAdapter {
                 4, 4, 5);
         bunkerBaseAnimation = new NewAnimation(mainAtlas.findRegion("Bunker_base"), Animation.PlayMode.LOOP,
                 2, 1, 4);
-        cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon"), Animation.PlayMode.NORMAL,
-                1, 1, 25);
+        cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon-anim"), Animation.PlayMode.LOOP_RANDOM,
+                4, 1, 25);
+        deploySound = Gdx.audio.newMusic(Gdx.files.internal("deployment1.mp3"));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(Color.LIGHT_GRAY);
-        boolean fire = false;
-
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) fire = true;
+        ScreenUtils.clear(Color.DARK_GRAY);
+        boolean fire = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.line(getPosition().x - 10, getPosition().y, getPosition().x + 10, getPosition().y);
@@ -81,12 +82,14 @@ public class MyGdxGame extends ApplicationAdapter {
 
         batch.begin();
         if (!bunkerAnimation.isFinished()) {
+            deploySound.play();
             bunkerAnimation.setTime(Gdx.graphics.getDeltaTime());
             bunkerSprite.draw(batch);
         } else {
             bunkerBaseAnimation.setTime(Gdx.graphics.getDeltaTime());
             cannonSprite.draw(batch);
             bunkerBaseSprite.draw(batch);
+            deploySound.stop();
         }
         for (int i = 0; i < explosions.size(); i++) {
             explosions.get(i).setTime(Gdx.graphics.getDeltaTime());
@@ -112,5 +115,6 @@ public class MyGdxGame extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
+        deploySound.dispose();
     }
 }

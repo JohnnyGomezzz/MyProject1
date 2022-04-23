@@ -20,9 +20,16 @@ Bunker_base
   index: -1
 cannon
   rotate: false
-  xy: 2, 2
+  xy: 272, 180
   size: 22, 44
   orig: 22, 44
+  offset: 0, 0
+  index: -1
+cannon-anim
+  rotate: false
+  xy: 2, 2
+  size: 88, 44
+  orig: 88, 44
   offset: 0, 0
   index: -1
 explosion-green
