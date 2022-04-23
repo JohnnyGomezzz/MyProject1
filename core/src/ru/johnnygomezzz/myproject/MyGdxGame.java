@@ -5,9 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -23,24 +24,26 @@ public class MyGdxGame extends ApplicationAdapter {
     NewAnimation bunkerBaseAnimation;
     NewAnimation cannonAnimation;
     List<Explosion> explosions;
+    Sprite cannonSprite;
+    TextureAtlas mainAtlas;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+        mainAtlas = new TextureAtlas("atlas/main.atlas");
         explosions = new ArrayList<>();
-        bunkerAnimation = new NewAnimation("Bunker.png", Animation.PlayMode.NORMAL,
+        bunkerAnimation = new NewAnimation(mainAtlas.findRegion("Bunker"), Animation.PlayMode.NORMAL,
                 4, 4, 5);
-        bunkerBaseAnimation = new NewAnimation("Bunker_base.png", Animation.PlayMode.LOOP,
+        bunkerBaseAnimation = new NewAnimation(mainAtlas.findRegion("Bunker_base"), Animation.PlayMode.LOOP,
                 2, 1, 4);
-        cannonAnimation = new NewAnimation("cannon.png", Animation.PlayMode.NORMAL,
+        cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon"), Animation.PlayMode.NORMAL,
                 1, 1, 25);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(Color.DARK_GRAY);
-        float rotation = 360 - MathUtils.atan2(getPosition().x - 320, getPosition().y - 22) * MathUtils.radiansToDegrees;
         boolean fire = false;
 
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) fire = true;
@@ -58,9 +61,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     bunkerAnimation.getRegion().getRegionWidth() * 2, bunkerAnimation.getRegion().getRegionHeight() * 2);
         } else {
             bunkerBaseAnimation.setTime(Gdx.graphics.getDeltaTime());
-            batch.draw(cannonAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth() / 2f + 13),
-                    0, 46, 11, cannonAnimation.getRegion().getRegionHeight(), cannonAnimation.getRegion().getRegionWidth(),
-                    2, 2, rotation - 90, false);
+            cannonSprite.draw(batch);
             batch.draw(bunkerBaseAnimation.getRegion(), Gdx.graphics.getWidth() / 2f - (bunkerAnimation.getRegion().getRegionWidth()), 0,
                     bunkerAnimation.getRegion().getRegionWidth() * 2, bunkerAnimation.getRegion().getRegionHeight() * 2);
         }
@@ -79,9 +80,21 @@ public class MyGdxGame extends ApplicationAdapter {
         }
         if (fire & cannonAnimation.isFinished()) {
             cannonAnimation.resetTime();
-            explosions.add(new Explosion("explosion-green.png",
+            explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
                     Animation.PlayMode.NORMAL, 5, 4,16, "laser-explosion.mp3"));
         }
+
+        cannonSprite = new Sprite(cannonAnimation.getRegion());
+        Vector2 cannonPosition = new Vector2(11, cannonSprite.getRegionHeight() - 44    );
+        cannonSprite.setOrigin(cannonPosition.x, cannonPosition.y);
+
+        batch.begin();
+        cannonSprite.setPosition(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15);
+        cannonSprite.setRotation(getAngle(new Vector2(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15)));
+        cannonSprite.setScale(2, 2);
+//        cannonSprite.draw(batch);
+        batch.end();
+
     }
 
     @Override

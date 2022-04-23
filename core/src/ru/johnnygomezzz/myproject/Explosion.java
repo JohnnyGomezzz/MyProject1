@@ -14,8 +14,8 @@ public class Explosion {
     Music music;
     private Vector2 position;
 
-    public Explosion(String texture, Animation.PlayMode mode, int cols, int rows, int fps, String musicName) {
-        animation = new NewAnimation(texture, mode, cols, rows, fps);
+    public Explosion(TextureRegion region, Animation.PlayMode mode, int cols, int rows, int fps, String musicName) {
+        animation = new NewAnimation(region, mode, cols, rows, fps);
         time = 0;
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
         music.play();
