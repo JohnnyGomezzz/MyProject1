@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -28,6 +30,7 @@ public class MyGdxGame extends ApplicationAdapter {
     Sprite cannonSprite;
     Sprite bunkerSprite;
     Sprite bunkerBaseSprite;
+    Sprite alienSprite;
     TextureAtlas mainAtlas;
     Music deploySound;
 
@@ -42,7 +45,7 @@ public class MyGdxGame extends ApplicationAdapter {
         bunkerBaseAnimation = new NewAnimation(mainAtlas.findRegion("Bunker_base"), Animation.PlayMode.LOOP,
                 2, 1, 4);
         cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon-anim"), Animation.PlayMode.LOOP_RANDOM,
-                4, 1, 25);
+                4, 1, 30);
         deploySound = Gdx.audio.newMusic(Gdx.files.internal("deployment1.mp3"));
     }
 
@@ -56,6 +59,16 @@ public class MyGdxGame extends ApplicationAdapter {
             shapeRenderer.line(getPosition().x, getPosition().y - 10, getPosition().x, getPosition().y + 10);
             shapeRenderer.circle(getPosition().x, getPosition().y, 7);
         shapeRenderer.end();
+
+        alienSprite = new Sprite(mainAtlas.findRegion("alien-pink"));
+        Vector2 alienSpriteOrigin = new Vector2(alienSprite.getRegionWidth() / 2, alienSprite.getRegionHeight() / 2);
+        alienSprite.setOrigin(alienSpriteOrigin.x, alienSpriteOrigin.y);
+        Vector2 alienPosition = new Vector2(200, 100);
+        batch.begin();
+        alienSprite.setPosition(alienPosition.x - alienSpriteOrigin.x, alienPosition.y - alienSpriteOrigin.y);
+        alienSprite.setRotation(getAngle(alienPosition));
+        alienSprite.draw(batch);
+        batch.end();
 
         bunkerSprite = new Sprite(bunkerAnimation.getRegion());
         Vector2 bunkerPosition = new Vector2(33, bunkerSprite.getRegionHeight() - 44);

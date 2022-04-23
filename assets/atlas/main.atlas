@@ -18,9 +18,16 @@ Bunker_base
   orig: 134, 44
   offset: 0, 0
   index: -1
+alien-pink
+  rotate: false
+  xy: 272, 172
+  size: 50, 52
+  orig: 50, 52
+  offset: 0, 0
+  index: -1
 cannon
   rotate: false
-  xy: 272, 180
+  xy: 644, 648
   size: 22, 44
   orig: 22, 44
   offset: 0, 0
