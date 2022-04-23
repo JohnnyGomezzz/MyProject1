@@ -1,5 +1,6 @@
 package ru.johnnygomezzz.myproject;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import ru.johnnygomezzz.myproject.MyGdxGame;
