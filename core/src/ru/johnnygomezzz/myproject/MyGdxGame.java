@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -33,6 +32,9 @@ public class MyGdxGame extends ApplicationAdapter {
     Sprite alienSprite;
     TextureAtlas mainAtlas;
     Music deploySound;
+    float xPos;
+    float yPos;
+    int count;
 
     @Override
     public void create() {
@@ -47,6 +49,7 @@ public class MyGdxGame extends ApplicationAdapter {
         cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon-anim"), Animation.PlayMode.LOOP_RANDOM,
                 4, 1, 30);
         deploySound = Gdx.audio.newMusic(Gdx.files.internal("deployment1.mp3"));
+        yPos = Gdx.graphics.getHeight() - 10;
     }
 
     @Override
@@ -61,14 +64,36 @@ public class MyGdxGame extends ApplicationAdapter {
         shapeRenderer.end();
 
         alienSprite = new Sprite(mainAtlas.findRegion("alien-pink"));
-        Vector2 alienSpriteOrigin = new Vector2(alienSprite.getRegionWidth() / 2, alienSprite.getRegionHeight() / 2);
+        Vector2 alienSpriteOrigin = new Vector2(alienSprite.getRegionWidth() / 2f, alienSprite.getRegionHeight() / 2f);
         alienSprite.setOrigin(alienSpriteOrigin.x, alienSpriteOrigin.y);
-        Vector2 alienPosition = new Vector2(200, 100);
+        yPos -= 0.3f;
         batch.begin();
+        Vector2 alienPosition = new Vector2(200, yPos);
         alienSprite.setPosition(alienPosition.x - alienSpriteOrigin.x, alienPosition.y - alienSpriteOrigin.y);
-        alienSprite.setRotation(getAngle(alienPosition));
+        alienSprite.setRotation(getAngle(alienPosition) - 180);
         alienSprite.draw(batch);
         batch.end();
+
+        if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
+            cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
+        }
+        if (fire & cannonAnimation.isFinished()) {
+            cannonAnimation.resetTime();
+            explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
+                    Animation.PlayMode.NORMAL, 5, 4,16, "laser-explosion.mp3"));
+            if (alienSprite.getBoundingRectangle().contains(getPosition())) {
+                x = Gdx.graphics.getWidth();
+                y = MathUtils.random(Gdx.graphics.getHeight() - alienSprite.getHeight());
+                count++;
+            }
+        }
+        Gdx.graphics.setTitle("Подбито: " + String.valueOf(count));
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.rect(alienSprite.getBoundingRectangle().x, alienSprite.getBoundingRectangle().y,
+                alienSprite.getBoundingRectangle().getWidth(), alienSprite.getBoundingRectangle().getHeight());
+        shapeRenderer.end();
+
 
         bunkerSprite = new Sprite(bunkerAnimation.getRegion());
         Vector2 bunkerPosition = new Vector2(33, bunkerSprite.getRegionHeight() - 44);
@@ -113,15 +138,6 @@ public class MyGdxGame extends ApplicationAdapter {
             }
         }
         batch.end();
-
-        if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
-            cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
-        }
-        if (fire & cannonAnimation.isFinished()) {
-            cannonAnimation.resetTime();
-            explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
-                    Animation.PlayMode.NORMAL, 5, 4,16, "laser-explosion.mp3"));
-        }
     }
 
     @Override
