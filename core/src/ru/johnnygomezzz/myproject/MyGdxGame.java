@@ -49,7 +49,7 @@ public class MyGdxGame extends ApplicationAdapter {
         cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon-anim"), Animation.PlayMode.LOOP_RANDOM,
                 4, 1, 30);
         deploySound = Gdx.audio.newMusic(Gdx.files.internal("deployment1.mp3"));
-        yPos = Gdx.graphics.getHeight() - 10;
+        yPos = Gdx.graphics.getHeight() - 100;
     }
 
     @Override
@@ -82,8 +82,8 @@ public class MyGdxGame extends ApplicationAdapter {
             explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
                     Animation.PlayMode.NORMAL, 5, 4,16, "laser-explosion.mp3"));
             if (alienSprite.getBoundingRectangle().contains(getPosition())) {
-                x = Gdx.graphics.getWidth();
-                y = MathUtils.random(Gdx.graphics.getHeight() - alienSprite.getHeight());
+                xPos = MathUtils.random(0, Gdx.graphics.getWidth() - alienSprite.getWidth());
+                yPos = Gdx.graphics.getHeight() + 100;
                 count++;
             }
         }
