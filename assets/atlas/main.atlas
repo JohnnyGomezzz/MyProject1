@@ -1,0 +1,48 @@
+
+main.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Bunker
+  rotate: false
+  xy: 2, 48
+  size: 268, 176
+  orig: 268, 176
+  offset: 0, 0
+  index: -1
+Bunker_base
+  rotate: false
+  xy: 644, 694
+  size: 134, 44
+  orig: 134, 44
+  offset: 0, 0
+  index: -1
+alien-pink
+  rotate: false
+  xy: 272, 172
+  size: 50, 52
+  orig: 50, 52
+  offset: 0, 0
+  index: -1
+cannon
+  rotate: false
+  xy: 644, 648
+  size: 22, 44
+  orig: 22, 44
+  offset: 0, 0
+  index: -1
+cannon-anim
+  rotate: false
+  xy: 2, 2
+  size: 88, 44
+  orig: 88, 44
+  offset: 0, 0
+  index: -1
+explosion-green
+  rotate: false
+  xy: 2, 226
+  size: 640, 512
+  orig: 640, 512
+  offset: 0, 0
+  index: -1

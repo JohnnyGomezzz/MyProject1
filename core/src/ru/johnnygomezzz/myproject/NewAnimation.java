@@ -1,6 +1,5 @@
 package ru.johnnygomezzz.myproject;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -8,10 +7,9 @@ public class NewAnimation {
     private Animation<TextureRegion> animation;
     private float time;
 
-    public NewAnimation(String name, Animation.PlayMode mode, int cols, int rows, int fps) {
-        Texture texture = new Texture(name);
-        TextureRegion[][] tmpRegion = new TextureRegion(texture).split(texture.getWidth()/cols,
-                texture.getHeight()/rows);
+    public NewAnimation(TextureRegion name, Animation.PlayMode mode, int cols, int rows, int fps) {
+        TextureRegion[][] tmpRegion = name.split(name.getRegionWidth() / cols,
+                name.getRegionHeight() / rows);
         TextureRegion[] regions = new TextureRegion[tmpRegion.length * tmpRegion[0].length];
 
         int cnt = 0;
