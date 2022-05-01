@@ -167,7 +167,7 @@ public class GameProcess implements Screen, InputProcessor {
         }
 
         if (yPos == 0) {
-            Gdx.app.exit();
+            game.setScreen(new MainMenu(game));
         }
     }
 
