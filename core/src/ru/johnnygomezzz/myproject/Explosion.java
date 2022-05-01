@@ -11,7 +11,7 @@ import static ru.johnnygomezzz.myproject.GfxUtils.*;
 public class Explosion {
     private NewAnimation animation;
     private float time;
-    Music music;
+    private Music music;
     private Vector2 position;
 
     public Explosion(TextureRegion region, Animation.PlayMode mode, int cols, int rows, int fps, String musicName) {

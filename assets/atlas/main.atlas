@@ -6,23 +6,65 @@ filter: Nearest, Nearest
 repeat: none
 Bunker
   rotate: false
-  xy: 2, 48
+  xy: 2, 146
   size: 268, 176
   orig: 268, 176
   offset: 0, 0
   index: -1
 Bunker_base
   rotate: false
-  xy: 644, 694
+  xy: 846, 792
   size: 134, 44
   orig: 134, 44
   offset: 0, 0
   index: -1
 alien-pink
   rotate: false
-  xy: 272, 172
+  xy: 204, 92
   size: 50, 52
   orig: 50, 52
+  offset: 0, 0
+  index: -1
+buttons-exit
+  rotate: false
+  xy: 272, 252
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-exit-light
+  rotate: false
+  xy: 272, 180
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-help
+  rotate: false
+  xy: 2, 74
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-help-light
+  rotate: false
+  xy: 2, 2
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-play
+  rotate: false
+  xy: 644, 694
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-play-light
+  rotate: false
+  xy: 644, 766
+  size: 200, 70
+  orig: 200, 70
   offset: 0, 0
   index: -1
 cannon
@@ -34,14 +76,14 @@ cannon
   index: -1
 cannon-anim
   rotate: false
-  xy: 2, 2
+  xy: 474, 278
   size: 88, 44
   orig: 88, 44
   offset: 0, 0
   index: -1
 explosion-green
   rotate: false
-  xy: 2, 226
+  xy: 2, 324
   size: 640, 512
   orig: 640, 512
   offset: 0, 0
