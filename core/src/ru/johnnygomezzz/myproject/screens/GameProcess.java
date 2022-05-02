@@ -76,8 +76,7 @@ public class GameProcess implements Screen, InputProcessor {
         boolean fire = false;
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             fire = true;
-        }
-        ;
+        };
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.line(getPosition().x - 10, getPosition().y, getPosition().x + 10, getPosition().y);
@@ -118,6 +117,10 @@ public class GameProcess implements Screen, InputProcessor {
         }
         if (fire & cannonAnimation.isFinished()) {
             cannonAnimation.resetTime();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.line(Gdx.graphics.getWidth() / 2f, 15, getPosition().x, getPosition().y,
+                    Color.WHITE, Color.OLIVE);
+            shapeRenderer.end();
             explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
                     Animation.PlayMode.NORMAL, 5, 4, 16, "laser-explosion.mp3"));
             if (alienSprite.getBoundingRectangle().contains(getPosition())) {
@@ -143,6 +146,7 @@ public class GameProcess implements Screen, InputProcessor {
             explosions.get(i).setTime(Gdx.graphics.getDeltaTime());
             Vector2 tVec = explosions.get(i).getExplosionPosition();
             batch.draw(explosions.get(i).getRegion(), tVec.x, tVec.y);
+
             if (explosions.get(i).isFinished()) {
                 explosions.remove(i);
             }
