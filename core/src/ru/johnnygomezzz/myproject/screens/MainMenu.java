@@ -57,7 +57,6 @@ public class MainMenu implements Screen, InputProcessor {
         buttonExitHighlighted = new Sprite(mainAtlas.findRegion("buttons-exit-light"));
         buttonExitHighlighted.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f - 100);
 
-        cursorVec = getPosition();
         rectanglePlayH = buttonPlayHighlighted.getBoundingRectangle();
         rectangleExitH = buttonExitHighlighted.getBoundingRectangle();
         rectanglePlay = buttonPlay.getBoundingRectangle();
@@ -167,6 +166,7 @@ public class MainMenu implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        cursorVec = getPosition();
         play = false;
         exit = false;
 
