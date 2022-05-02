@@ -76,7 +76,7 @@ public class GameProcess implements Screen, InputProcessor {
         boolean fire = false;
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             fire = true;
-        };
+        }
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.line(getPosition().x - 10, getPosition().y, getPosition().x + 10, getPosition().y);
@@ -129,7 +129,7 @@ public class GameProcess implements Screen, InputProcessor {
                 count++;
             }
         }
-        Gdx.graphics.setTitle("Подбито: " + String.valueOf(count));
+        Gdx.graphics.setTitle("Подбито: " + count);
 
         batch.begin();
         if (!bunkerAnimation.isFinished()) {

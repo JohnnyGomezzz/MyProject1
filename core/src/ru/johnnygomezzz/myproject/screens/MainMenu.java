@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MainMenu implements Screen, InputProcessor {
     final Game game;
     SpriteBatch batch;
+    Sprite gameTitle;
     Sprite buttonPlay;
     Sprite buttonExit;
     TextureAtlas mainAtlas;
@@ -39,13 +40,17 @@ public class MainMenu implements Screen, InputProcessor {
 
         mainAtlas = new TextureAtlas("atlas/main.atlas");
 
+        gameTitle = new Sprite(mainAtlas.findRegion("title"));
+        gameTitle.setPosition(Gdx.graphics.getWidth() / 2f - gameTitle.getWidth() / 2f, Gdx.graphics.getHeight() - gameTitle.getHeight() - 50);
+
         buttonPlay = new Sprite(mainAtlas.findRegion("buttons-play"));
-        buttonPlay.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 3f);
+        buttonPlay.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f);
 
         buttonExit = new Sprite(mainAtlas.findRegion("buttons-exit"));
-        buttonExit.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 3f - 100);
+        buttonExit.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f - 100);
 
         batch.begin();
+        gameTitle.draw(batch);
         buttonPlay.draw(batch);
         buttonExit.draw(batch);
         batch.end();
