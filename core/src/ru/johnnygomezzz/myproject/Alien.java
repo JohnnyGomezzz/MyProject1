@@ -1,5 +1,6 @@
 package ru.johnnygomezzz.myproject;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,7 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 
 import static ru.johnnygomezzz.myproject.screens.GameProcess.*;
 
+import ru.johnnygomezzz.myproject.screens.MainMenu;
+
 public class Alien {
+    private Game game;
     private Vector2 position;
     private float speed;
     private float health;
@@ -18,6 +22,7 @@ public class Alien {
     private boolean isDamaged;
 
     public Alien() {
+        game = new MyGdxGame();
         isDamaged = false;
         skin = mainAtlas.createSprite("alien-pink");
         position = new Vector2();
@@ -39,6 +44,9 @@ public class Alien {
             skin.setColor(Color.WHITE);
         }
         skin.draw(batch);
+        if (skin.getHeight() / 2f == 0) {
+            game.setScreen(new MainMenu(game));
+        }
     }
 
     public void step() {

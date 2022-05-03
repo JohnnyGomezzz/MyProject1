@@ -128,7 +128,7 @@ public class GameProcess implements Screen, InputProcessor {
         }
 
         ListIterator<Alien> iterator1 = aliensList.listIterator();
-        while (iterator1.hasNext()) {
+        while (iterator1.hasNext() && iterator1.nextIndex() <= aliensTotal) {
             Alien alien = iterator1.next();
             alien.step();
             alien.draw(batch);
