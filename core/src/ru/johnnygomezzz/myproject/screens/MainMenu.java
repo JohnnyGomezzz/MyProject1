@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MainMenu implements Screen, InputProcessor {
     private final Game game;
     private SpriteBatch batch;
+    private Texture background;
     private Sprite gameTitle;
     private Sprite buttonPlay;
     private Sprite buttonPlayHighlighted;
@@ -29,9 +31,7 @@ public class MainMenu implements Screen, InputProcessor {
     private boolean exit;
 
     private Vector2 cursorVec;
-    private Rectangle rectanglePlayH;
     private Rectangle rectanglePlay;
-    private Rectangle rectangleExitH;
     private Rectangle rectangleExit;
 
     private OrthographicCamera camera;
@@ -42,6 +42,8 @@ public class MainMenu implements Screen, InputProcessor {
 
         batch = new SpriteBatch();
 
+        background = new Texture("background_earth.jpg");
+
         mainAtlas = new TextureAtlas("atlas/main.atlas");
 
         gameTitle = new Sprite(mainAtlas.findRegion("title"));
@@ -50,15 +52,13 @@ public class MainMenu implements Screen, InputProcessor {
         buttonPlay = new Sprite(mainAtlas.findRegion("buttons-play"));
         buttonPlay.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f);
         buttonPlayHighlighted = new Sprite(mainAtlas.findRegion("buttons-play-light"));
-        buttonPlayHighlighted.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f);
+        buttonPlayHighlighted.setPosition(buttonPlay.getX(), buttonPlay.getY());
 
         buttonExit = new Sprite(mainAtlas.findRegion("buttons-exit"));
         buttonExit.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f - 100);
         buttonExitHighlighted = new Sprite(mainAtlas.findRegion("buttons-exit-light"));
-        buttonExitHighlighted.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f - 100);
+        buttonExitHighlighted.setPosition(buttonExit.getX(), buttonExit.getY());
 
-        rectanglePlayH = buttonPlayHighlighted.getBoundingRectangle();
-        rectangleExitH = buttonExitHighlighted.getBoundingRectangle();
         rectanglePlay = buttonPlay.getBoundingRectangle();
         rectangleExit = buttonExit.getBoundingRectangle();
 
@@ -80,6 +80,9 @@ public class MainMenu implements Screen, InputProcessor {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
+
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         gameTitle.draw(batch);
         if (play) {
             buttonPlayHighlighted.draw(batch);
