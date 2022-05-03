@@ -38,4 +38,8 @@ public class NewAnimation {
     public void resetTime() {
         time = 0;
     }
+
+    public void dispose() {
+
+    }
 }

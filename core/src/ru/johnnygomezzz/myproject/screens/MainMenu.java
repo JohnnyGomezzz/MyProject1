@@ -46,17 +46,17 @@ public class MainMenu implements Screen, InputProcessor {
 
         mainAtlas = new TextureAtlas("atlas/main.atlas");
 
-        gameTitle = new Sprite(mainAtlas.findRegion("title"));
+        gameTitle = mainAtlas.createSprite("title");
         gameTitle.setPosition(Gdx.graphics.getWidth() / 2f - gameTitle.getWidth() / 2f, Gdx.graphics.getHeight() - gameTitle.getHeight() - 50);
 
-        buttonPlay = new Sprite(mainAtlas.findRegion("buttons-play"));
+        buttonPlay = mainAtlas.createSprite("buttons-play");
         buttonPlay.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f);
-        buttonPlayHighlighted = new Sprite(mainAtlas.findRegion("buttons-play-light"));
+        buttonPlayHighlighted = mainAtlas.createSprite("buttons-play-light");
         buttonPlayHighlighted.setPosition(buttonPlay.getX(), buttonPlay.getY());
 
-        buttonExit = new Sprite(mainAtlas.findRegion("buttons-exit"));
+        buttonExit = mainAtlas.createSprite("buttons-exit");
         buttonExit.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f - 100);
-        buttonExitHighlighted = new Sprite(mainAtlas.findRegion("buttons-exit-light"));
+        buttonExitHighlighted = mainAtlas.createSprite("buttons-exit-light");
         buttonExitHighlighted.setPosition(buttonExit.getX(), buttonExit.getY());
 
         rectanglePlay = buttonPlay.getBoundingRectangle();
