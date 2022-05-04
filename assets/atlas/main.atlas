@@ -6,85 +6,92 @@ filter: Nearest, Nearest
 repeat: none
 Bunker
   rotate: false
-  xy: 2, 146
+  xy: 644, 656
   size: 268, 176
   orig: 268, 176
   offset: 0, 0
   index: -1
 Bunker_base
   rotate: false
-  xy: 846, 792
+  xy: 504, 274
   size: 134, 44
   orig: 134, 44
   offset: 0, 0
   index: -1
 alien-pink
   rotate: false
-  xy: 204, 92
+  xy: 846, 602
   size: 50, 52
   orig: 50, 52
   offset: 0, 0
   index: -1
 buttons-exit
   rotate: false
-  xy: 272, 252
+  xy: 2, 74
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-exit-light
   rotate: false
-  xy: 272, 180
+  xy: 2, 2
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-help
   rotate: false
-  xy: 2, 74
+  xy: 644, 584
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-help-light
   rotate: false
-  xy: 2, 2
+  xy: 644, 512
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-play
   rotate: false
-  xy: 644, 694
+  xy: 204, 146
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-play-light
   rotate: false
-  xy: 644, 766
+  xy: 2, 146
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 cannon
   rotate: false
-  xy: 644, 648
+  xy: 204, 100
   size: 22, 44
   orig: 22, 44
   offset: 0, 0
   index: -1
 cannon-anim
   rotate: false
-  xy: 474, 278
+  xy: 914, 788
   size: 88, 44
   orig: 88, 44
   offset: 0, 0
   index: -1
 explosion-green
   rotate: false
-  xy: 2, 324
+  xy: 2, 320
   size: 640, 512
   orig: 640, 512
+  offset: 0, 0
+  index: -1
+title
+  rotate: false
+  xy: 2, 218
+  size: 500, 100
+  orig: 500, 100
   offset: 0, 0
   index: -1

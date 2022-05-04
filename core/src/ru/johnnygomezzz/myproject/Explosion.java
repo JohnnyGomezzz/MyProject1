@@ -33,11 +33,18 @@ public class Explosion {
         return position;
     }
 
+    public Vector2 getPos() {return position;}
+
     public TextureRegion getRegion() {
         return animation.getRegion();
     }
 
     public boolean isFinished() {
         return animation.isFinished();
+    }
+
+    public void dispose(){
+        animation.dispose();
+        music.dispose();
     }
 }

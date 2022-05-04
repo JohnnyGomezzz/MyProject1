@@ -14,39 +14,50 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
+import ru.johnnygomezzz.myproject.Alien;
 import ru.johnnygomezzz.myproject.Explosion;
 import ru.johnnygomezzz.myproject.NewAnimation;
 
 
 public class GameProcess implements Screen, InputProcessor {
-    final Game game;
-    SpriteBatch batch;
-    ShapeRenderer shapeRenderer;
-    NewAnimation bunkerAnimation;
-    NewAnimation bunkerBaseAnimation;
-    NewAnimation cannonAnimation;
-    List<Explosion> explosions;
-    Sprite cannonSprite;
-    Sprite bunkerSprite;
-    Sprite bunkerBaseSprite;
-    Sprite alienSprite;
-    TextureAtlas mainAtlas;
-    Music deploySound;
-    float xPos;
-    float yPos;
-    int count;
+    private final Game game;
+    private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
+    private NewAnimation bunkerAnimation;
+    private NewAnimation bunkerBaseAnimation;
+    private NewAnimation cannonAnimation;
+    private List<Explosion> explosions;
+    private Sprite cannonSprite;
+    private Sprite bunkerSprite;
+    private Sprite bunkerBaseSprite;
+    public static TextureAtlas mainAtlas;
+    private Music deploySound;
+    private int count;
+    private int aliensOnScreen;
+    private int aliensTotal;
+    private List<Alien> aliensList;
+    private float alienTime;
+    private float alienTimeCounter;
+    private float damage;
 
 
     public GameProcess(Game game) {
         this.game = game;
         Gdx.input.setInputProcessor(this);
+
+        aliensList = new ArrayList<>();
+        aliensOnScreen = 5;
+        alienTime = 1;
+        alienTimeCounter = 0;
+        aliensTotal = 10;
+        damage = 1;
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -59,9 +70,6 @@ public class GameProcess implements Screen, InputProcessor {
         cannonAnimation = new NewAnimation(mainAtlas.findRegion("cannon-anim"), Animation.PlayMode.LOOP_RANDOM,
                 4, 1, 30);
         deploySound = Gdx.audio.newMusic(Gdx.files.internal("deployment1.mp3"));
-
-        xPos = MathUtils.random(0, Gdx.graphics.getWidth());
-        yPos = Gdx.graphics.getHeight();
     }
 
     @Override
@@ -77,7 +85,6 @@ public class GameProcess implements Screen, InputProcessor {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             fire = true;
         }
-        ;
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.line(getPosition().x - 10, getPosition().y, getPosition().x + 10, getPosition().y);
@@ -108,26 +115,6 @@ public class GameProcess implements Screen, InputProcessor {
         cannonSprite.setScale(2, 2);
         batch.end();
 
-        createAlien(3);
-
-        if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
-            cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
-        }
-        if (!fire & !cannonAnimation.isFinished()) {
-            cannonAnimation.resetTime();
-        }
-        if (fire & cannonAnimation.isFinished()) {
-            cannonAnimation.resetTime();
-            explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
-                    Animation.PlayMode.NORMAL, 5, 4, 16, "laser-explosion.mp3"));
-            if (alienSprite.getBoundingRectangle().contains(getPosition())) {
-                xPos = MathUtils.random(0, Gdx.graphics.getWidth() - alienSprite.getWidth());
-                yPos = Gdx.graphics.getHeight();
-                count++;
-            }
-        }
-        Gdx.graphics.setTitle("Подбито: " + String.valueOf(count));
-
         batch.begin();
         if (!bunkerAnimation.isFinished()) {
             deploySound.play();
@@ -139,35 +126,60 @@ public class GameProcess implements Screen, InputProcessor {
             bunkerBaseSprite.draw(batch);
             deploySound.stop();
         }
-        for (int i = 0; i < explosions.size(); i++) {
-            explosions.get(i).setTime(Gdx.graphics.getDeltaTime());
-            Vector2 tVec = explosions.get(i).getExplosionPosition();
-            batch.draw(explosions.get(i).getRegion(), tVec.x, tVec.y);
-            if (explosions.get(i).isFinished()) {
-                explosions.remove(i);
+
+        ListIterator<Alien> iterator1 = aliensList.listIterator();
+        while (iterator1.hasNext() && iterator1.nextIndex() <= aliensTotal) {
+            Alien alien = iterator1.next();
+            alien.step();
+            alien.draw(batch);
+        }
+
+        ListIterator<Explosion> iterator = explosions.listIterator();
+        while (iterator.hasNext()) {
+            Explosion ex = iterator.next();
+            ex.setTime(Gdx.graphics.getDeltaTime());
+            if (ex.isFinished()) {
+                ex.dispose();
+                iterator.remove();
+            } else {
+                batch.draw(ex.getRegion(), ex.getPos().x, ex.getPos().y);
             }
         }
         batch.end();
-    }
 
-    public void createAlien(int quantity) {
+        if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
+            cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
+        }
+        if (!fire & !cannonAnimation.isFinished()) {
+            cannonAnimation.resetTime();
+        }
+        if (fire & cannonAnimation.isFinished()) {
+            cannonAnimation.resetTime();
 
-        alienSprite = new Sprite(mainAtlas.findRegion("alien-pink"));
-        Vector2 alienSpriteOrigin = new Vector2(alienSprite.getRegionWidth() / 2f, alienSprite.getRegionHeight() / 2f);
-        alienSprite.setOrigin(alienSpriteOrigin.x, alienSpriteOrigin.y);
-        yPos -= 0.5f;
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.line(Gdx.graphics.getWidth() / 2f, 15, getPosition().x, getPosition().y,
+                    Color.WHITE, Color.OLIVE);
+            shapeRenderer.end();
 
-        for (int i = 0; i < quantity; i++) {
-            batch.begin();
-            Vector2 alienPosition = new Vector2(xPos, yPos);
-            alienSprite.setPosition(alienPosition.x - alienSpriteOrigin.x, alienPosition.y - alienSpriteOrigin.y);
-            alienSprite.setRotation(getAngle(alienPosition) - 180);
-            alienSprite.draw(batch);
-            batch.end();
+            explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
+                    Animation.PlayMode.NORMAL, 5, 4, 16, "laser-explosion.mp3"));
+            iterator1 = aliensList.listIterator();
+            while (iterator1.hasNext()) {
+                Alien alien = iterator1.next();
+                if (alien.isDamaged(getPosition(), damage) < 0) {
+                    iterator1.remove();
+                    count++;
+                }
+            }
         }
 
-        if (yPos == 0) {
-            Gdx.app.exit();
+        Gdx.graphics.setTitle("Подбито: " + count);
+
+        alienTimeCounter += Gdx.graphics.getDeltaTime();
+        if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
+            alienTimeCounter = 0;
+            aliensList.add(new Alien());
+            aliensTotal--;
         }
     }
 
