@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import static ru.johnnygomezzz.myproject.screens.GameProcess.*;
 
-import ru.johnnygomezzz.myproject.screens.MainMenu;
-
 public class Alien {
     private Game game;
     private Vector2 position;
@@ -33,7 +31,7 @@ public class Alien {
         skin.setOrigin(skinOrigin.x, skinOrigin.y);
 
         speed = MathUtils.random(0.25f, 1.0f);
-        health = 1;
+        health = 5;
     }
 
     public void draw(SpriteBatch batch) {
@@ -43,10 +41,6 @@ public class Alien {
         } else {
             skin.setColor(Color.WHITE);
         }
-        skin.draw(batch);
-        if (skin.getHeight() / 2f == 0) {
-            game.setScreen(new MainMenu(game));
-        }
     }
 
     public void step() {
@@ -54,13 +48,15 @@ public class Alien {
         skin.setPosition(position.x, position.y);
     }
 
-    public float isDamaged(Vector2 pos, float damage) {
-        Rectangle tRect = skin.getBoundingRectangle();
-        if (tRect.contains(pos)) {
-            isDamaged = true;
-            health -= damage;
-        }
+    public float damage(float damage) {
+        isDamaged = true;
+        health -= damage;
         return health;
+    }
+
+    public boolean isHit(Vector2 position) {
+        Rectangle tRect = skin.getBoundingRectangle();
+        return tRect.contains(position);
     }
 
     public void dispose() {

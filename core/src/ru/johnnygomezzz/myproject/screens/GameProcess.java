@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ru.johnnygomezzz.myproject.Alien;
+import ru.johnnygomezzz.myproject.BossAlien;
 import ru.johnnygomezzz.myproject.Explosion;
 import ru.johnnygomezzz.myproject.NewAnimation;
 
@@ -42,7 +43,7 @@ public class GameProcess implements Screen, InputProcessor {
     private int count;
     private int aliensOnScreen;
     private int aliensTotal;
-    private List<Alien> aliensList;
+    private List<BossAlien> aliensList;
     private float alienTime;
     private float alienTimeCounter;
     private float damage;
@@ -127,9 +128,9 @@ public class GameProcess implements Screen, InputProcessor {
             deploySound.stop();
         }
 
-        ListIterator<Alien> iterator1 = aliensList.listIterator();
-        while (iterator1.hasNext() && iterator1.nextIndex() <= aliensTotal) {
-            Alien alien = iterator1.next();
+        ListIterator<BossAlien> iterator1 = aliensList.listIterator();
+        while (iterator1.hasNext()) {
+            BossAlien alien = iterator1.next();
             alien.step();
             alien.draw(batch);
         }
@@ -150,9 +151,6 @@ public class GameProcess implements Screen, InputProcessor {
         if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
             cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
         }
-        if (!fire & !cannonAnimation.isFinished()) {
-            cannonAnimation.resetTime();
-        }
         if (fire & cannonAnimation.isFinished()) {
             cannonAnimation.resetTime();
 
@@ -162,23 +160,27 @@ public class GameProcess implements Screen, InputProcessor {
             shapeRenderer.end();
 
             explosions.add(new Explosion(mainAtlas.findRegion("explosion-green"),
-                    Animation.PlayMode.NORMAL, 5, 4, 16, "laser-explosion.mp3"));
-            iterator1 = aliensList.listIterator();
-            while (iterator1.hasNext()) {
-                Alien alien = iterator1.next();
-                if (alien.isDamaged(getPosition(), damage) < 0) {
-                    iterator1.remove();
-                    count++;
+                    Animation.PlayMode.NORMAL, 5, 4, 16, "laser-explosion.mp3", damage));
+            iterator1 = aliensList.listIterator(aliensList.size());
+            while (iterator1.hasPrevious()) {
+                BossAlien alien = iterator1.previous();
+                if (alien.isHit(getPosition())) {
+                    if (alien.damage(explosions.get(explosions.size() - 1).getDamage()) < 0) {
+                        iterator1.remove();
+                        explosions.get(explosions.size() - 1).setDamage(0);
+                        count++;
+                        break;
+                    }
                 }
             }
         }
 
-        Gdx.graphics.setTitle("Подбито: " + count);
+        Gdx.graphics.setTitle("Подбито: " + count + " врагов на экране: " + aliensTotal);
 
         alienTimeCounter += Gdx.graphics.getDeltaTime();
         if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
             alienTimeCounter = 0;
-            aliensList.add(new Alien());
+            aliensList.add(new BossAlien("alien-pink", 0.5f, 10));
             aliensTotal--;
         }
     }
