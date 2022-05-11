@@ -74,5 +74,6 @@ public class BossAlien {
         } else {
             skin.setColor(Color.WHITE);
         }
+        skin.draw(batch);
     }
 }

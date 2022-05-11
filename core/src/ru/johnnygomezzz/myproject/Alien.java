@@ -41,6 +41,7 @@ public class Alien {
         } else {
             skin.setColor(Color.WHITE);
         }
+        skin.draw(batch);
     }
 
     public void step() {
