@@ -10,13 +10,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class BossAlien {
+public class BaseAlien {
     protected Vector2 position, origin;
     protected float health, speed, damage;
     protected Sprite skin;
     protected boolean isDamaged;
 
-    public BossAlien(String name, float speed, float health) {
+    public BaseAlien(String name, float speed, float health) {
         isDamaged = false;
         skin = mainAtlas.createSprite(name);
         position = new Vector2();

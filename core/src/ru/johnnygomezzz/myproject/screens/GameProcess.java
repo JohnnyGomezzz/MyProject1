@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import ru.johnnygomezzz.myproject.Alien;
-import ru.johnnygomezzz.myproject.BossAlien;
+import ru.johnnygomezzz.myproject.BaseAlien;
 import ru.johnnygomezzz.myproject.Explosion;
 import ru.johnnygomezzz.myproject.NewAnimation;
 
@@ -43,7 +42,7 @@ public class GameProcess implements Screen, InputProcessor {
     private int count;
     private int aliensOnScreen;
     private int aliensTotal;
-    private List<BossAlien> aliensList;
+    private List<BaseAlien> aliensList;
     private float alienTime;
     private float alienTimeCounter;
     private float damage;
@@ -128,9 +127,9 @@ public class GameProcess implements Screen, InputProcessor {
             deploySound.stop();
         }
 
-        ListIterator<BossAlien> iterator1 = aliensList.listIterator();
+        ListIterator<BaseAlien> iterator1 = aliensList.listIterator();
         while (iterator1.hasNext()) {
-            BossAlien alien = iterator1.next();
+            BaseAlien alien = iterator1.next();
             alien.step();
             alien.draw(batch);
         }
@@ -163,7 +162,7 @@ public class GameProcess implements Screen, InputProcessor {
                     Animation.PlayMode.NORMAL, 5, 4, 16, "laser-explosion.mp3", damage));
             iterator1 = aliensList.listIterator(aliensList.size());
             while (iterator1.hasPrevious()) {
-                BossAlien alien = iterator1.previous();
+                BaseAlien alien = iterator1.previous();
                 if (alien.isHit(getPosition())) {
                     if (alien.damage(explosions.get(explosions.size() - 1).getDamage()) < 0) {
                         iterator1.remove();
@@ -180,7 +179,7 @@ public class GameProcess implements Screen, InputProcessor {
         alienTimeCounter += Gdx.graphics.getDeltaTime();
         if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
             alienTimeCounter = 0;
-            aliensList.add(new BossAlien("alien-pink", 0.5f, 10));
+            aliensList.add(new BaseAlien("alien-pink", 0.5f, 10));
             aliensTotal--;
         }
     }
