@@ -10,16 +10,24 @@ import static ru.johnnygomezzz.myproject.GfxUtils.*;
 
 public class Explosion {
     private NewAnimation animation;
-    private float time;
     private Music music;
     private Vector2 position;
+    private float damage;
 
-    public Explosion(TextureRegion region, Animation.PlayMode mode, int cols, int rows, int fps, String musicName) {
+    public Explosion(TextureRegion region, Animation.PlayMode mode, int cols, int rows, int fps, String musicName, float damage) {
         animation = new NewAnimation(region, mode, cols, rows, fps);
-        time = 0;
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
         music.play();
         position = getPosition(animation.getRegion().getRegionWidth(), animation.getRegion().getRegionHeight());
+        this.damage = damage;
+    }
+
+    public void setDamage(float damage) {
+        this.damage = damage;
+    }
+
+    public float getDamage() {
+        return damage;
     }
 
     public void setTime(float dTime) {
