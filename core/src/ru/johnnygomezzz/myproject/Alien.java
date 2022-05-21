@@ -27,7 +27,7 @@ public class Alien {
         position.x = MathUtils.random(0, Gdx.graphics.getWidth() - skin.getWidth());
         position.y = Gdx.graphics.getHeight();
         skin.setPosition(position.x, position.y);
-        Vector2 skinOrigin = new Vector2(skin.getRegionWidth() / 2f, skin.getRegionHeight() / 2f);
+        Vector2 skinOrigin = new Vector2(skin.getRegionWidth() / 2.0f, skin.getRegionHeight() / 2.0f);
         skin.setOrigin(skinOrigin.x, skinOrigin.y);
 
         speed = MathUtils.random(0.25f, 1.0f);
