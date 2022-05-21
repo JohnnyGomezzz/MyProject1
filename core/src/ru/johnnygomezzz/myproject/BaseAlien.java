@@ -23,7 +23,7 @@ public class BaseAlien {
         position.x = MathUtils.random(0, Gdx.graphics.getWidth() - skin.getWidth());
         position.y = Gdx.graphics.getHeight();
         skin.setPosition(position.x, position.y);
-        origin = new Vector2(skin.getRegionWidth() / 2f, skin.getRegionHeight() / 2f);
+        origin = new Vector2(skin.getRegionWidth() / 2.0f, skin.getRegionHeight() / 2.0f);
         skin.setOrigin(origin.x, origin.y);
         skin.setScale(1);
 

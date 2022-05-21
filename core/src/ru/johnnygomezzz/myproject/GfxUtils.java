@@ -9,7 +9,6 @@ public class GfxUtils {
     static float y;
 
     public static float getAngle(Vector2 pos) {
-//        return  360 - MathUtils.atan2(getPosition().x - 320, getPosition().y - 22) * MathUtils.radiansToDegrees;
         return  360 - MathUtils.atan2(getPosition().x - pos.x, getPosition().y - pos.y) * MathUtils.radiansToDegrees;
     }
 
@@ -22,8 +21,8 @@ public class GfxUtils {
     public static Vector2 getPosition(int width, int height) {
         x = Gdx.input.getX();
         y = Gdx.graphics.getHeight() - Gdx.input.getY();
-        x -= width / 2f;
-        y -= height / 2f;
+        x -= width / 2.0f;
+        y -= height / 2.0f;
         return new Vector2(x, y);
     }
 }
