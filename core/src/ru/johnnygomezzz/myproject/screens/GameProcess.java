@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import ru.johnnygomezzz.myproject.BaseAlien;
+import ru.johnnygomezzz.myproject.BigAlien;
 import ru.johnnygomezzz.myproject.Explosion;
 import ru.johnnygomezzz.myproject.NewAnimation;
 
@@ -42,7 +44,7 @@ public class GameProcess implements Screen, InputProcessor {
     private int count;
     private int aliensOnScreen;
     private int aliensTotal;
-    private List<BaseAlien> aliensList;
+    private List<BigAlien> aliensList;
     private float alienTime;
     private float alienTimeCounter;
     private float damage;
@@ -53,7 +55,7 @@ public class GameProcess implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         aliensList = new ArrayList<>();
-        aliensOnScreen = 5;
+        aliensOnScreen = 3;
         alienTime = 1;
         alienTimeCounter = 0;
         aliensTotal = 10;
@@ -127,7 +129,7 @@ public class GameProcess implements Screen, InputProcessor {
             deploySound.stop();
         }
 
-        ListIterator<BaseAlien> iterator1 = aliensList.listIterator();
+        ListIterator<BigAlien> iterator1 = aliensList.listIterator();
         while (iterator1.hasNext()) {
             BaseAlien alien = iterator1.next();
             alien.step();
@@ -177,9 +179,10 @@ public class GameProcess implements Screen, InputProcessor {
         Gdx.graphics.setTitle("Подбито: " + count + " врагов на экране: " + aliensTotal);
 
         alienTimeCounter += Gdx.graphics.getDeltaTime();
+        float alienSpeed = MathUtils.random(0.3f, 0.5f);
         if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
             alienTimeCounter = 0;
-            aliensList.add(new BaseAlien("alien-pink", 0.5f, 10));
+            aliensList.add(new BigAlien("alien-boss1", alienSpeed, 50));
             aliensTotal--;
         }
     }
