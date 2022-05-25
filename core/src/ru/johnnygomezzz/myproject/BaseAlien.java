@@ -1,6 +1,7 @@
 package ru.johnnygomezzz.myproject;
 
 import static ru.johnnygomezzz.myproject.screens.GameProcess.mainAtlas;
+import static ru.johnnygomezzz.myproject.GfxUtils.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class BaseAlien {
-    protected Vector2 position, origin;
+    protected Vector2 position, origin, rotate;
     protected float health, speed, damage;
     protected Sprite skin;
     protected boolean isDamaged;
@@ -45,12 +46,20 @@ public class BaseAlien {
         return position;
     }
 
+    public Sprite getSkin() {
+        return skin;
+    }
+
+    public void setRotate(Vector2 pos) {
+        skin.rotate(getAngle(pos));
+    }
+
     public void setDamage(float damage) {
         this.damage = damage;
     }
 
-    public Vector2 getOrigin() {
-        return origin;
+    public void setOrigin(Vector2 origin) {
+        this.origin = origin;
     }
 
     public void setPosition(Vector2 position) {

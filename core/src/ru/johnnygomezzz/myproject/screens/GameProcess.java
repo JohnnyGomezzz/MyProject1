@@ -89,9 +89,9 @@ public class GameProcess implements Screen, InputProcessor {
         }
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.line(getPosition().x - 10, getPosition().y, getPosition().x + 10, getPosition().y);
-        shapeRenderer.line(getPosition().x, getPosition().y - 10, getPosition().x, getPosition().y + 10);
-        shapeRenderer.circle(getPosition().x, getPosition().y, 7);
+        shapeRenderer.line(getCursorPosition().x - 10, getCursorPosition().y, getCursorPosition().x + 10, getCursorPosition().y);
+        shapeRenderer.line(getCursorPosition().x, getCursorPosition().y - 10, getCursorPosition().x, getCursorPosition().y + 10);
+        shapeRenderer.circle(getCursorPosition().x, getCursorPosition().y, 7);
         shapeRenderer.end();
 
         bunkerSprite = new Sprite(bunkerAnimation.getRegion());
@@ -156,7 +156,7 @@ public class GameProcess implements Screen, InputProcessor {
             cannonAnimation.resetTime();
 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.line(Gdx.graphics.getWidth() / 2f, 15, getPosition().x, getPosition().y,
+            shapeRenderer.line(Gdx.graphics.getWidth() / 2f, 15, getCursorPosition().x, getCursorPosition().y,
                     Color.WHITE, Color.OLIVE);
             shapeRenderer.end();
 
@@ -165,7 +165,7 @@ public class GameProcess implements Screen, InputProcessor {
             iterator1 = aliensList.listIterator(aliensList.size());
             while (iterator1.hasPrevious()) {
                 BaseAlien alien = iterator1.previous();
-                if (alien.isHit(getPosition())) {
+                if (alien.isHit(getCursorPosition())) {
                     if (alien.damage(explosions.get(explosions.size() - 1).getDamage()) < 0) {
                         iterator1.remove();
                         explosions.get(explosions.size() - 1).setDamage(0);

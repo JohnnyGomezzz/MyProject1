@@ -18,7 +18,7 @@ public class Explosion {
         animation = new NewAnimation(region, mode, cols, rows, fps);
         music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
         music.play();
-        position = getPosition(animation.getRegion().getRegionWidth(), animation.getRegion().getRegionHeight());
+        position = getCursorPosition(animation.getRegion().getRegionWidth(), animation.getRegion().getRegionHeight());
         this.damage = damage;
     }
 

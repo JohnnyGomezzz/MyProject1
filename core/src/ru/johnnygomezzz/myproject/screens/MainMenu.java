@@ -169,7 +169,7 @@ public class MainMenu implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        cursorVec = getPosition();
+        cursorVec = getCursorPosition();
         play = false;
         exit = false;
 
