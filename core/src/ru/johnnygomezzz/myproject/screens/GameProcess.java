@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -82,6 +83,10 @@ public class GameProcess implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.DARK_GRAY);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new MainMenu(game));
+        }
 
         boolean fire = false;
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -175,16 +180,18 @@ public class GameProcess implements Screen, InputProcessor {
                 }
             }
         }
-
-        Gdx.graphics.setTitle("Подбито: " + count + " врагов на экране: " + aliensTotal);
-
         alienTimeCounter += Gdx.graphics.getDeltaTime();
         float alienSpeed = MathUtils.random(0.3f, 0.5f);
-        if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
-            alienTimeCounter = 0;
-            aliensList.add(new BigAlien("alien-boss1", alienSpeed, 50));
-            aliensTotal--;
-        }
+
+       // while (aliensTotal >= 0) {
+            if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
+                alienTimeCounter = 0;
+                aliensList.add(new BigAlien("alien-boss1", alienSpeed, 10));
+                aliensTotal--;
+            }
+       // }
+
+        Gdx.graphics.setTitle("Подбито: " + count + " Осталось врагов: " + aliensTotal);
     }
 
     @Override
