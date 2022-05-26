@@ -9,6 +9,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -40,6 +40,7 @@ public class GameProcess implements Screen, InputProcessor {
     private Sprite cannonSprite;
     private Sprite bunkerSprite;
     private Sprite bunkerBaseSprite;
+    private Texture background;
     public static TextureAtlas mainAtlas;
     private Music deploySound;
     private int count;
@@ -63,6 +64,7 @@ public class GameProcess implements Screen, InputProcessor {
         damage = 1;
 
         batch = new SpriteBatch();
+        background = new Texture("background_game.png");
         shapeRenderer = new ShapeRenderer();
         mainAtlas = new TextureAtlas("atlas/main.atlas");
         explosions = new ArrayList<>();
@@ -87,6 +89,10 @@ public class GameProcess implements Screen, InputProcessor {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new MainMenu(game));
         }
+
+        batch.begin();
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
 
         boolean fire = false;
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {

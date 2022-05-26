@@ -1,9 +1,7 @@
 package ru.johnnygomezzz.myproject;
 
 import static ru.johnnygomezzz.myproject.GfxUtils.*;
-import static ru.johnnygomezzz.myproject.GfxUtils.getCursorPosition;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -50,7 +48,6 @@ public class BigAlien extends BaseAlien {
         super.step();
         for (int i = 0; i < turrets.size(); i++) {
             turrets.get(i).step();
-            //turrets.get(i).setOrigin(new Vector2(100, 100));
             turrets.get(i).getSkin().setRotation(getAngle(new Vector2(getPosition().x + 22, position.y + (skin.getHeight() - 100.0f))) - 180);
 
 //            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
