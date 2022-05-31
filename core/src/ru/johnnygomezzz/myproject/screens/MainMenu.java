@@ -48,7 +48,6 @@ public class MainMenu implements Screen, InputProcessor {
 
         gameTitle = mainAtlas.createSprite("title");
         gameTitle.setPosition(Gdx.graphics.getWidth() / 2f - gameTitle.getWidth() / 2f, Gdx.graphics.getHeight() - gameTitle.getHeight() - 50);
-        //gameTitle.setSize(Gdx.graphics.getWidth() * 0.8f, Gdx.graphics.getHeight() * 0.2f);
 
         buttonPlay = mainAtlas.createSprite("buttons-play");
         buttonPlay.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f);

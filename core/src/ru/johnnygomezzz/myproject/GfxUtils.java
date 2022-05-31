@@ -8,7 +8,7 @@ public class GfxUtils {
     static float x;
     static float y;
 
-    public static float getAngle(Vector2 pos) {
+    public static float getAngleToCursorFrom(Vector2 pos) {
         return  360 - MathUtils.atan2(getCursorPosition().x - pos.x, getCursorPosition().y - pos.y) * MathUtils.radiansToDegrees;
     }
 
@@ -18,7 +18,7 @@ public class GfxUtils {
         return new Vector2(x, y);
     }
 
-    public static Vector2 getCursorPosition(int width, int height) {
+    public static Vector2 getCursorCenterPosition(int width, int height) {
         x = Gdx.input.getX();
         y = Gdx.graphics.getHeight() - Gdx.input.getY();
         x -= width / 2.0f;

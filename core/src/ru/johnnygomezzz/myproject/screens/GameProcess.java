@@ -124,7 +124,7 @@ public class GameProcess implements Screen, InputProcessor {
         cannonSprite.setOrigin(cannonPosition.x, cannonPosition.y);
         batch.begin();
         cannonSprite.setPosition(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15);
-        cannonSprite.setRotation(getAngle(new Vector2(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15)));
+        cannonSprite.setRotation(getAngleToCursorFrom(new Vector2(Gdx.graphics.getWidth() / 2f - cannonPosition.x, 15)));
         cannonSprite.setScale(2, 2);
         batch.end();
 

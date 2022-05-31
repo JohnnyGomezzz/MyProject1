@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class BaseAlien {
     protected Vector2 position, origin, rotate;
-    protected float health, speed, damage;
+    protected float health, speed, damage, positionCorrectionX, positionCorrectionY;
     protected Sprite skin;
     protected boolean isDamaged;
 
@@ -50,8 +50,8 @@ public class BaseAlien {
         return skin;
     }
 
-    public void setRotate(Vector2 pos) {
-        skin.rotate(getAngle(pos));
+    public void setRotate(Vector2 pos, int angleCorrection) {
+        skin.setRotation(getAngleToCursorFrom(pos) - angleCorrection);
     }
 
     public void setDamage(float damage) {
@@ -64,6 +64,24 @@ public class BaseAlien {
 
     public void setPosition(Vector2 position) {
         this.position = position;
+    }
+
+    public float getPositionCorrectionX() {
+        return positionCorrectionX;
+    }
+
+    public void setPositionCorrectionX(float positionCorrectionX) {
+        this.positionCorrectionX = positionCorrectionX;
+        position.x += positionCorrectionX;
+    }
+
+    public float getPositionCorrectionY() {
+        return positionCorrectionY;
+    }
+
+    public void setPositionCorrectionY(float positionCorrectionY) {
+        this.positionCorrectionY = positionCorrectionY;
+        position.y += positionCorrectionY;
     }
 
     public void step() {
