@@ -13,11 +13,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class BaseAlien {
     protected Vector2 position, origin, rotate;
-    protected float health, speed, damage, positionCorrectionX, positionCorrectionY;
+    protected float health, speed, damage, positionCorrectionX, positionCorrectionY, scale;
     protected Sprite skin;
     protected boolean isDamaged;
 
-    public BaseAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
+    public BaseAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY, float scale) {
         isDamaged = false;
         skin = mainAtlas.createSprite(name);
         position = new Vector2();
@@ -26,7 +26,7 @@ public class BaseAlien {
         skin.setPosition(position.x, position.y);
         origin = new Vector2(skin.getRegionWidth() / 2.0f, skin.getRegionHeight() / 2.0f);
         skin.setOrigin(origin.x, origin.y);
-        skin.setScale(1);
+        skin.setScale(scale);
 
         this.speed = speed;
         this.health = health;
@@ -52,8 +52,8 @@ public class BaseAlien {
         return skin;
     }
 
-    public void setRotate(Vector2 pos, int angleCorrection) {
-        skin.setRotation(getAngleToCursorFrom(pos) - angleCorrection);
+    public void setRotate(Vector2 posFrom, Vector2 posTo, int angleCorrection) {
+        skin.setRotation(getAngleFromTo(posFrom, posTo) - angleCorrection);
     }
 
     public void setDamage(float damage) {
@@ -82,6 +82,14 @@ public class BaseAlien {
 
     public void setPositionCorrectionY(float positionCorrectionY) {
         this.positionCorrectionY = positionCorrectionY;
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
     public void step() {

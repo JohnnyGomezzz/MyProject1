@@ -12,6 +12,11 @@ public class GfxUtils {
         return  360 - MathUtils.atan2(getCursorPosition().x - pos.x, getCursorPosition().y - pos.y) * MathUtils.radiansToDegrees;
     }
 
+    public static float getAngleFromTo(Vector2 posFrom, Vector2 posTo) {
+        return  360 - MathUtils.atan2(posTo.x - posFrom.x, posTo.y - posFrom.y) * MathUtils.radiansToDegrees;
+    }
+
+
     public static Vector2 getCursorPosition() {
         x = Gdx.input.getX();
         y = Gdx.graphics.getHeight() - Gdx.input.getY();
