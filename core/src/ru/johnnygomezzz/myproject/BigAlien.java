@@ -15,26 +15,21 @@ public class BigAlien extends BaseAlien {
     private int turretToDamage;
     private ShapeRenderer shapeRenderer;
 
-    public BigAlien(String name, float speed, float health) {
-        super(name, speed, health);
+    public BigAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
+        super(name, speed, health, positionCorrectionX, positionCorrectionY);
 
         turrets = new ArrayList<>();
         turretToDamage = 0;
         shapeRenderer = new ShapeRenderer();
 
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10));
-//        Vector2 position0 = new Vector2(position.x + 22.0f, position.y + (skin.getHeight() - 100.0f));
-        turrets.get(turrets.size() - 1).setPositionCorrectionX(100.0f);
-        turrets.get(turrets.size() - 1).setPositionCorrectionY(-100.0f);
-        turrets.get(turrets.size() - 1).setPosition(new Vector2(position.x, position.y));
-
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10));
-        Vector2 position1 = new Vector2(position.x + 75.0f, position.y + (skin.getHeight() - 125.0f));
-        turrets.get(turrets.size() - 1).setPosition(position1);
-
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10));
-        Vector2 position2 = new Vector2(position.x + 130.0f, position.y + (skin.getHeight() - 103.0f));
-        turrets.get(turrets.size() - 1).setPosition(position2);
+        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 22, 100));
+        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 75, 125));
+        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 130, 103));
+        for (int i = 0; i < turrets.size(); i++) {
+            Vector2 turretPosition = new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
+                position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY()));
+            turrets.get(i).setPosition(turretPosition);
+        }
 
     }
 
@@ -51,8 +46,8 @@ public class BigAlien extends BaseAlien {
         super.step();
         for (int i = 0; i < turrets.size(); i++) {
             turrets.get(i).step();
-            turrets.get(i).setRotate(new Vector2(position.x + 22, position.y + (skin.getHeight() - 100.0f)), 180);
-//            turrets.get(i).setRotate(new Vector2(position.x, position.y), 180);
+            turrets.get(i).setRotate(new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
+                    position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY())), 180);
         }
     }
 

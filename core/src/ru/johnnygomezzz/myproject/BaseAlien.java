@@ -17,11 +17,11 @@ public class BaseAlien {
     protected Sprite skin;
     protected boolean isDamaged;
 
-    public BaseAlien(String name, float speed, float health) {
+    public BaseAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
         isDamaged = false;
         skin = mainAtlas.createSprite(name);
         position = new Vector2();
-        position.x = MathUtils.random(0, Gdx.graphics.getWidth() - skin.getWidth());
+        position.x = (MathUtils.random(0, Gdx.graphics.getWidth() - skin.getWidth()));
         position.y = Gdx.graphics.getHeight();
         skin.setPosition(position.x, position.y);
         origin = new Vector2(skin.getRegionWidth() / 2.0f, skin.getRegionHeight() / 2.0f);
@@ -30,6 +30,8 @@ public class BaseAlien {
 
         this.speed = speed;
         this.health = health;
+        this.positionCorrectionX = positionCorrectionX;
+        this.positionCorrectionY = positionCorrectionY;
     }
 
     public float getDamage() {
@@ -72,7 +74,6 @@ public class BaseAlien {
 
     public void setPositionCorrectionX(float positionCorrectionX) {
         this.positionCorrectionX = positionCorrectionX;
-        position.x += positionCorrectionX;
     }
 
     public float getPositionCorrectionY() {
@@ -81,7 +82,6 @@ public class BaseAlien {
 
     public void setPositionCorrectionY(float positionCorrectionY) {
         this.positionCorrectionY = positionCorrectionY;
-        position.y += positionCorrectionY;
     }
 
     public void step() {
