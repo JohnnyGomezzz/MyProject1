@@ -17,16 +17,16 @@ public class BigAlien extends BaseAlien {
     private int turretToDamage;
     private ShapeRenderer shapeRenderer;
 
-    public BigAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY, float scale) {
-        super(name, speed, health, positionCorrectionX, positionCorrectionY, scale);
+    public BigAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
+        super(name, speed, health, positionCorrectionX, positionCorrectionY);
 
         turrets = new ArrayList<>();
         turretToDamage = 0;
         shapeRenderer = new ShapeRenderer();
 
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 22, 100, this.scale));
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 75, 125, 1));
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 130, 103, 1));
+        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 22, 100));
+        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 75, 125));
+        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 130, 103));
         for (int i = 0; i < turrets.size(); i++) {
             Vector2 turretPosition = new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
                 position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY()));

@@ -193,7 +193,7 @@ public class GameProcess implements Screen, InputProcessor {
             if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
                 alienTimeCounter = 0;
                 aliensList.add(new BigAlien("alien-boss1", alienSpeed, 10,
-                        0, 0, MathUtils.random(0.5f, 1f)));
+                        0, 0));
                 aliensTotal--;
             }
        // }
