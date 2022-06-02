@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenu implements Screen, InputProcessor {
     private final Game game;
@@ -35,6 +37,7 @@ public class MainMenu implements Screen, InputProcessor {
     private Rectangle rectangleExit;
 
     private OrthographicCamera camera;
+    private Viewport viewport;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -46,26 +49,26 @@ public class MainMenu implements Screen, InputProcessor {
 
         mainAtlas = new TextureAtlas("atlas/main.atlas");
 
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        viewport = new StretchViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        camera.update();
+
         gameTitle = mainAtlas.createSprite("title");
         gameTitle.setPosition(Gdx.graphics.getWidth() / 2f - gameTitle.getWidth() / 2f, Gdx.graphics.getHeight() - gameTitle.getHeight() - 50);
 
         buttonPlay = mainAtlas.createSprite("buttons-play");
-        buttonPlay.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f);
+        buttonPlay.setPosition(viewport.getWorldWidth() / 3f, viewport.getWorldHeight() - viewport.getWorldHeight() / 2f);
         buttonPlayHighlighted = mainAtlas.createSprite("buttons-play-light");
         buttonPlayHighlighted.setPosition(buttonPlay.getX(), buttonPlay.getY());
 
         buttonExit = mainAtlas.createSprite("buttons-exit");
-        buttonExit.setPosition(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 2f - 100);
+        buttonExit.setPosition(viewport.getWorldWidth() / 3f, viewport.getWorldHeight() - viewport.getWorldHeight() / 2f - 100);
         buttonExitHighlighted = mainAtlas.createSprite("buttons-exit-light");
         buttonExitHighlighted.setPosition(buttonExit.getX(), buttonExit.getY());
 
         rectanglePlay = buttonPlay.getBoundingRectangle();
         rectangleExit = buttonExit.getBoundingRectangle();
-
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.x = Gdx.graphics.getWidth() / 2f;
-        camera.position.y = Gdx.graphics.getHeight() / 2f;
-        camera.update();
     }
 
     @Override
@@ -81,7 +84,7 @@ public class MainMenu implements Screen, InputProcessor {
 
         batch.begin();
 
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
 
         gameTitle.draw(batch);
         if (play) {
@@ -100,11 +103,8 @@ public class MainMenu implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         Gdx.graphics.setWindowedMode(width, height);
-        camera.viewportHeight = height;
-        camera.viewportWidth = width;
-        camera.position.x = Gdx.graphics.getWidth() / 2f;
-        camera.position.y = Gdx.graphics.getHeight() / 2f;
         camera.update();
+        viewport.update(width, height);
     }
 
     @Override
