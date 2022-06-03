@@ -84,9 +84,13 @@ public class BaseAlien {
         this.positionCorrectionY = positionCorrectionY;
     }
 
-    public void step() {
+    public boolean step() {
         position.y -= speed;
         skin.setPosition(position.x, position.y);
+        if (position.y % 100f == 0) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isHit(Vector2 position) {

@@ -1,16 +1,14 @@
 package ru.johnnygomezzz.myproject;
 
-import static ru.johnnygomezzz.myproject.GfxUtils.*;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.johnnygomezzz.myproject.screens.GameProcess;
 
 public class BigAlien extends BaseAlien {
     private List<BaseAlien> turrets;
@@ -21,7 +19,7 @@ public class BigAlien extends BaseAlien {
         super(name, speed, health, positionCorrectionX, positionCorrectionY);
 
         turrets = new ArrayList<>();
-        turretToDamage = 0;
+        turretToDamage = -1;
         shapeRenderer = new ShapeRenderer();
 
         turrets.add(new BaseAlien("alien-pink-small", speed, 10, 22, 100));
@@ -31,6 +29,7 @@ public class BigAlien extends BaseAlien {
             Vector2 turretPosition = new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
                 position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY()));
             turrets.get(i).setPosition(turretPosition);
+            turrets.get(i).setDamage(1f);
         }
 
     }
@@ -44,14 +43,19 @@ public class BigAlien extends BaseAlien {
     }
 
     @Override
-    public void step() {
+    public boolean step() {
         super.step();
         for (int i = 0; i < turrets.size(); i++) {
-            turrets.get(i).step();
+            if (turrets.get(i).step()) {
+                GameProcess.life -= turrets.get(i).getDamage();
+                System.out.println(turrets.get(i).getDamage());
+//                music.play();
+            }
             turrets.get(i).setRotate(new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
                     position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY())),
                     new Vector2(Gdx.graphics.getWidth() / 2f,0), 180);
         }
+        return false;
     }
 
     @Override

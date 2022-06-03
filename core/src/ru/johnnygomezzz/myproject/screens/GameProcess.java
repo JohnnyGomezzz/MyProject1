@@ -51,10 +51,14 @@ public class GameProcess implements Screen, InputProcessor {
     private float alienTimeCounter;
     private float damage;
 
+    public static float life;
+
 
     public GameProcess(Game game) {
         this.game = game;
         Gdx.input.setInputProcessor(this);
+
+        life = 10;
 
         aliensList = new ArrayList<>();
         aliensOnScreen = 3;
@@ -99,11 +103,10 @@ public class GameProcess implements Screen, InputProcessor {
             fire = true;
         }
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.line(getCursorPosition().x - 10, getCursorPosition().y, getCursorPosition().x + 10, getCursorPosition().y);
-        shapeRenderer.line(getCursorPosition().x, getCursorPosition().y - 10, getCursorPosition().x, getCursorPosition().y + 10);
-        shapeRenderer.circle(getCursorPosition().x, getCursorPosition().y, 7);
-        shapeRenderer.end();
+        if (life < 0) {
+            dispose();
+            game.setScreen(new MainMenu(game));
+        }
 
         bunkerSprite = new Sprite(bunkerAnimation.getRegion());
         Vector2 bunkerPosition = new Vector2(33, bunkerSprite.getRegionHeight() - 44);
@@ -145,6 +148,10 @@ public class GameProcess implements Screen, InputProcessor {
             BaseAlien alien = iterator1.next();
             alien.step();
             alien.draw(batch);
+            Vector2 tmpVector = alien.getPosition();
+            if (tmpVector.y < - alien.getSkin().getHeight()) {
+                life = -1;
+            }
         }
 
         ListIterator<Explosion> iterator = explosions.listIterator();
@@ -159,6 +166,12 @@ public class GameProcess implements Screen, InputProcessor {
             }
         }
         batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.line(getCursorPosition().x - 10, getCursorPosition().y, getCursorPosition().x + 10, getCursorPosition().y);
+        shapeRenderer.line(getCursorPosition().x, getCursorPosition().y - 10, getCursorPosition().x, getCursorPosition().y + 10);
+        shapeRenderer.circle(getCursorPosition().x, getCursorPosition().y, 7);
+        shapeRenderer.end();
 
         if ((fire & !cannonAnimation.isFinished()) || (!fire & cannonAnimation.isFinished())) {
             cannonAnimation.setTime(Gdx.graphics.getDeltaTime());
@@ -198,7 +211,7 @@ public class GameProcess implements Screen, InputProcessor {
             }
        // }
 
-        Gdx.graphics.setTitle("Подбито: " + count + " Осталось врагов: " + aliensTotal);
+        Gdx.graphics.setTitle("Подбито: " + count + " Осталось врагов: " + aliensTotal + " Жизни: " + life);
     }
 
     @Override
