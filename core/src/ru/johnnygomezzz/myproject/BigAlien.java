@@ -39,6 +39,7 @@ public class BigAlien extends BaseAlien {
                 position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY()));
             turrets.get(i).setPosition(turretPosition);
             turrets.get(i).setDamage(1f);
+            turrets.get(i).setCourse(course);
         }
 
     }

@@ -63,6 +63,10 @@ public class BaseAlien {
         skin.setRotation(getAngleFromTo(posFrom, posTo) - angleCorrection);
     }
 
+    public void setCourse(float course) {
+        this.course = course;
+    }
+
     public void setDamage(float damage) {
         this.damage = damage;
     }
