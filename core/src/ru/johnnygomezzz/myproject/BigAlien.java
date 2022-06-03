@@ -1,7 +1,11 @@
 package ru.johnnygomezzz.myproject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -14,17 +18,22 @@ public class BigAlien extends BaseAlien {
     private List<BaseAlien> turrets;
     private int turretToDamage;
     private ShapeRenderer shapeRenderer;
+    private Texture texture;
 
-    public BigAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
-        super(name, speed, health, positionCorrectionX, positionCorrectionY);
+    public BigAlien(NewAnimation animation, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
+        super(animation, speed, health, positionCorrectionX, positionCorrectionY);
 
         turrets = new ArrayList<>();
         turretToDamage = -1;
         shapeRenderer = new ShapeRenderer();
+        texture = new Texture("alien-small.png");
 
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 22, 100));
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 75, 125));
-        turrets.add(new BaseAlien("alien-pink-small", speed, 10, 130, 103));
+        turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
+                3, 2, 16), speed, 10, 22, 100));
+        turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
+                3, 2, 16), speed, 10, 75, 125));
+        turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
+                3, 2, 16), speed, 10, 130, 103));
         for (int i = 0; i < turrets.size(); i++) {
             Vector2 turretPosition = new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
                 position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY()));

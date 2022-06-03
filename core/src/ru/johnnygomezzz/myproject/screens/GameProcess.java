@@ -58,7 +58,7 @@ public class GameProcess implements Screen, InputProcessor {
         this.game = game;
         Gdx.input.setInputProcessor(this);
 
-        life = 10;
+        life = 1000;
 
         aliensList = new ArrayList<>();
         aliensOnScreen = 3;
@@ -205,8 +205,8 @@ public class GameProcess implements Screen, InputProcessor {
        // while (aliensTotal >= 0) {
             if (alienTimeCounter > alienTime && aliensList.size() < aliensOnScreen) {
                 alienTimeCounter = 0;
-                aliensList.add(new BigAlien("alien-boss1", alienSpeed, 10,
-                        0, 0));
+                aliensList.add(new BigAlien(new NewAnimation(mainAtlas.findRegion("alien-boss1"), Animation.PlayMode.LOOP_RANDOM,
+                        1, 1, 16), alienSpeed, 10, 0, 0));
                 aliensTotal--;
             }
        // }

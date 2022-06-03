@@ -16,10 +16,14 @@ public class BaseAlien {
     protected float health, speed, damage, positionCorrectionX, positionCorrectionY;
     protected Sprite skin;
     protected boolean isDamaged;
+    protected NewAnimation animation;
 
-    public BaseAlien(String name, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
+    public BaseAlien(NewAnimation animation, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
         isDamaged = false;
-        skin = mainAtlas.createSprite(name);
+//        skin = mainAtlas.createSprite(name);
+        this.animation = animation;
+        skin = new Sprite(animation.getRegion());
+        animation.setTime(0);
         position = new Vector2();
         position.x = (MathUtils.random(0, Gdx.graphics.getWidth() - skin.getWidth()));
         position.y = Gdx.graphics.getHeight();
@@ -87,7 +91,9 @@ public class BaseAlien {
     public boolean step() {
         position.y -= speed;
         skin.setPosition(position.x, position.y);
-        if (position.y % 100f == 0) {
+        animation.setTime(Gdx.graphics.getDeltaTime());
+        if (animation.isFinished()) {
+            animation.resetTime();
             return true;
         }
         return false;
@@ -105,6 +111,7 @@ public class BaseAlien {
         } else {
             skin.setColor(Color.WHITE);
         }
+        skin.setRegion(animation.getRegion());
         skin.draw(batch);
     }
 }
