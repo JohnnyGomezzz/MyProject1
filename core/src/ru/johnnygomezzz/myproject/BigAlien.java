@@ -29,11 +29,11 @@ public class BigAlien extends BaseAlien {
         texture = new Texture("alien-small.png");
 
         turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
-                3, 2, 16), speed, 10, 22, 100));
+                3, 2, 16), speed, 10, 17, 110));
         turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
-                3, 2, 16), speed, 10, 75, 125));
+                3, 2, 16), speed, 10, 70, 135));
         turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
-                3, 2, 16), speed, 10, 130, 103));
+                3, 2, 16), speed, 10, 125, 113));
         for (int i = 0; i < turrets.size(); i++) {
             Vector2 turretPosition = new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
                 position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY()));
@@ -57,7 +57,6 @@ public class BigAlien extends BaseAlien {
         for (int i = 0; i < turrets.size(); i++) {
             if (turrets.get(i).step()) {
                 GameProcess.life -= turrets.get(i).getDamage();
-                System.out.println(turrets.get(i).getDamage());
 //                music.play();
             }
             turrets.get(i).setRotate(new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),

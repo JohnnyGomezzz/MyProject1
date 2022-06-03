@@ -17,6 +17,7 @@ public class BaseAlien {
     protected Sprite skin;
     protected boolean isDamaged;
     protected NewAnimation animation;
+    protected float course;
 
     public BaseAlien(NewAnimation animation, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
         isDamaged = false;
@@ -31,6 +32,8 @@ public class BaseAlien {
         origin = new Vector2(skin.getRegionWidth() / 2.0f, skin.getRegionHeight() / 2.0f);
         skin.setOrigin(origin.x, origin.y);
         skin.setScale(1);
+
+        course = MathUtils.random(-0.5f, 0.5f);
 
         this.speed = speed;
         this.health = health;
@@ -90,6 +93,10 @@ public class BaseAlien {
 
     public boolean step() {
         position.y -= speed;
+        position.x += course;
+        if (position.x + skin.getWidth() / 2 < 0 || position.x > Gdx.graphics.getWidth() - skin.getWidth() / 2) {
+            course = course * (-1);
+        }
         skin.setPosition(position.x, position.y);
         animation.setTime(Gdx.graphics.getDeltaTime());
         if (animation.isFinished()) {

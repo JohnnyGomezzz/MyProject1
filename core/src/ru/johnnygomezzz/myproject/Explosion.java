@@ -22,6 +22,11 @@ public class Explosion {
         this.damage = damage;
     }
 
+    public void setScale(float scale) {
+        animation.getRegion().setRegionHeight((int) (getRegion().getRegionHeight() * scale));
+        animation.getRegion().setRegionWidth((int) (getRegion().getRegionWidth() * scale));
+    }
+
     public void setDamage(float damage) {
         this.damage = damage;
     }
