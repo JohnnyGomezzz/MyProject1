@@ -1,12 +1,11 @@
 package ru.johnnygomezzz.myproject;
 
+import static ru.johnnygomezzz.myproject.screens.GameProcess.mainAtlas;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -17,22 +16,21 @@ import ru.johnnygomezzz.myproject.screens.GameProcess;
 public class BigAlien extends BaseAlien {
     private List<BaseAlien> turrets;
     private int turretToDamage;
-    private ShapeRenderer shapeRenderer;
-    private Texture texture;
+    private Music music;
 
     public BigAlien(NewAnimation animation, float speed, float health, float positionCorrectionX, float positionCorrectionY) {
         super(animation, speed, health, positionCorrectionX, positionCorrectionY);
 
+        music = Gdx.audio.newMusic(Gdx.files.internal("swarm_gun_03.mp3"));
+
         turrets = new ArrayList<>();
         turretToDamage = -1;
-        shapeRenderer = new ShapeRenderer();
-        texture = new Texture("alien-small.png");
 
-        turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
+        turrets.add(new BaseAlien(new NewAnimation(mainAtlas.findRegion("alien-small"), Animation.PlayMode.NORMAL,
                 3, 2, 16), speed, 10, 17, 110));
-        turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
+        turrets.add(new BaseAlien(new NewAnimation(mainAtlas.findRegion("alien-small"), Animation.PlayMode.NORMAL,
                 3, 2, 16), speed, 10, 70, 135));
-        turrets.add(new BaseAlien(new NewAnimation(new TextureRegion(texture), Animation.PlayMode.NORMAL,
+        turrets.add(new BaseAlien(new NewAnimation(mainAtlas.findRegion("alien-small"), Animation.PlayMode.NORMAL,
                 3, 2, 16), speed, 10, 125, 113));
         for (int i = 0; i < turrets.size(); i++) {
             Vector2 turretPosition = new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
@@ -40,6 +38,7 @@ public class BigAlien extends BaseAlien {
             turrets.get(i).setPosition(turretPosition);
             turrets.get(i).setDamage(1f);
             turrets.get(i).setCourse(course);
+            turrets.get(i).setAnimationMusic(music);
         }
 
     }
@@ -58,7 +57,7 @@ public class BigAlien extends BaseAlien {
         for (int i = 0; i < turrets.size(); i++) {
             if (turrets.get(i).step()) {
                 GameProcess.life -= turrets.get(i).getDamage();
-//                music.play();
+                music.play();
             }
             turrets.get(i).setRotate(new Vector2(position.x + turrets.get(i).getPositionCorrectionX(),
                     position.y + (skin.getHeight() - turrets.get(i).getPositionCorrectionY())),

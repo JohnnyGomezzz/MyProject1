@@ -105,7 +105,7 @@ public class GameProcess implements Screen, InputProcessor {
 
         if (life < 0) {
             dispose();
-            game.setScreen(new MainMenu(game));
+            game.setScreen(new GameOverMenu(game));
         }
 
         bunkerSprite = new Sprite(bunkerAnimation.getRegion());

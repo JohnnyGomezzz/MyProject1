@@ -1,11 +1,13 @@
 package ru.johnnygomezzz.myproject;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class NewAnimation {
     private Animation<TextureRegion> animation;
     private float time;
+    private Music music;
 
     public NewAnimation(TextureRegion name, Animation.PlayMode mode, int cols, int rows, int fps) {
         TextureRegion[][] tmpRegion = name.split(name.getRegionWidth() / cols,
@@ -21,6 +23,7 @@ public class NewAnimation {
         time = 0;
         animation = new Animation<TextureRegion>(1.0f/fps, regions);
         animation.setPlayMode(mode);
+        this.music = music;
     }
 
     public TextureRegion getRegion() {
@@ -37,6 +40,14 @@ public class NewAnimation {
 
     public void resetTime() {
         time = 0;
+    }
+
+    public Music getMusic() {
+        return music;
+    }
+
+    public void setMusic(Music music) {
+        this.music = music;
     }
 
     public void dispose() {

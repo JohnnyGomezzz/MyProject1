@@ -6,105 +6,140 @@ filter: Nearest, Nearest
 repeat: none
 Bunker
   rotate: false
-  xy: 644, 786
+  xy: 644, 846
   size: 268, 176
   orig: 268, 176
   offset: 0, 0
   index: -1
 Bunker_base
   rotate: false
-  xy: 504, 404
+  xy: 2, 2
   size: 134, 44
   orig: 134, 44
   offset: 0, 0
   index: -1
 alien-boss1
   rotate: false
-  xy: 2, 146
+  xy: 2, 206
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 alien-pink
   rotate: false
-  xy: 406, 294
+  xy: 406, 354
   size: 50, 52
   orig: 50, 52
   offset: 0, 0
   index: -1
 alien-pink-small
   rotate: false
-  xy: 846, 732
+  xy: 914, 970
   size: 50, 52
   orig: 50, 52
   offset: 0, 0
   index: -1
+alien-small
+  rotate: false
+  xy: 644, 724
+  size: 180, 120
+  orig: 180, 120
+  offset: 0, 0
+  index: -1
+buttons-again
+  rotate: false
+  xy: 644, 652
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-again-light
+  rotate: false
+  xy: 644, 508
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
 buttons-exit
   rotate: false
-  xy: 204, 276
+  xy: 2, 62
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-exit-light
   rotate: false
-  xy: 204, 204
+  xy: 204, 48
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-help
   rotate: false
-  xy: 2, 74
+  xy: 204, 336
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-help-light
   rotate: false
-  xy: 2, 2
+  xy: 204, 192
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-menu
+  rotate: false
+  xy: 644, 580
+  size: 200, 70
+  orig: 200, 70
+  offset: 0, 0
+  index: -1
+buttons-menu-light
+  rotate: false
+  xy: 204, 120
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-play
   rotate: false
-  xy: 644, 642
+  xy: 204, 264
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 buttons-play-light
   rotate: false
-  xy: 644, 714
+  xy: 2, 134
   size: 200, 70
   orig: 200, 70
   offset: 0, 0
   index: -1
 cannon
   rotate: false
-  xy: 644, 596
+  xy: 228, 2
   size: 22, 44
   orig: 22, 44
   offset: 0, 0
   index: -1
 cannon-anim
   rotate: false
-  xy: 914, 918
+  xy: 138, 2
   size: 88, 44
   orig: 88, 44
   offset: 0, 0
   index: -1
 explosion-green
   rotate: false
-  xy: 2, 450
+  xy: 2, 510
   size: 640, 512
   orig: 640, 512
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 2, 348
+  xy: 2, 408
   size: 500, 100
   orig: 500, 100
   offset: 0, 0

@@ -4,6 +4,7 @@ import static ru.johnnygomezzz.myproject.screens.GameProcess.mainAtlas;
 import static ru.johnnygomezzz.myproject.GfxUtils.*;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -93,6 +94,10 @@ public class BaseAlien {
 
     public void setPositionCorrectionY(float positionCorrectionY) {
         this.positionCorrectionY = positionCorrectionY;
+    }
+
+    public void setAnimationMusic(Music music) {
+        animation.setMusic(music);
     }
 
     public boolean step() {
